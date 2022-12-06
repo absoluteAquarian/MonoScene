@@ -40,7 +40,7 @@ namespace MonoScene.Graphics.Content
                     return new float[] { 1, 1, 1, 1 }; // RGB:Specular, A:Glossiness                
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("Material channel is not supported: " + key);
         }
 
         #endregion
