@@ -53,6 +53,10 @@ namespace MonoScene.Graphics.Content
 
         public MaterialChannelContent UseChannel(string name)
         {
+			// Redirect "SpecularColor" and "SpecularFactor" into "SpecularGlossiness"
+			if (name == "SpecularColor" || name == "SpecularFactor")
+				name = "SpecularGlossiness";
+
             var channel = FindChannel(name);
 
             if (channel == null)
@@ -66,6 +70,10 @@ namespace MonoScene.Graphics.Content
 
         public MaterialChannelContent FindChannel(string name)
         {
+			// Redirect "SpecularColor" and "SpecularFactor" into "SpecularGlossiness"
+			if (name == "SpecularColor" || name == "SpecularFactor")
+				name = "SpecularGlossiness";
+
             return _Channels.FirstOrDefault(item => item.Target == name);
         }
 

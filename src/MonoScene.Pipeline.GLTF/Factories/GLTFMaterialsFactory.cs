@@ -41,7 +41,21 @@ namespace MonoScene.Graphics.Pipeline
             {
                 var dstChannel = dstMaterial.UseChannel(srcChannel.Key);
 
-                dstChannel.Value = ParamToArray(srcChannel);
+				// Redirect "SpecularColor" and "SpecularFactor" into "SpecularGlossiness"
+				var key = srcChannel.Key;
+				if (key == "SpecularColor" && dstChannel.Target == "SpecularGlossiness") {
+					var rgb = srcChannel.Parameter;
+
+					var value = dstChannel.Value;
+					value[0] = rgb.X;
+					value[1] = rgb.Y;
+					value[2] = rgb.Z;
+				} else if (key == "SpecularFactor" && dstChannel.Target == "SpecularGlossiness") {
+					var factor = srcChannel.Parameter;
+
+					dstChannel.Value[3] = factor.X;
+				} else
+					dstChannel.Value = ParamToArray(srcChannel);
 
                 if (srcChannel.Texture != null)
                 {
